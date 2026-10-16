@@ -1,0 +1,15 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+_freeze/*
+/.quarto/
+/_site
+*cache*
+.RDataTmp
+
+/*_files/
+
+# Do not ignore the ones inside docs
+!docs/*_files/
