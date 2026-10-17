@@ -140,10 +140,14 @@ Disclaimer: Notes may be incomplete/contain mistakes.
   <li><a href="#issue-1-people-may-develop-cancer-later" id="toc-issue-1-people-may-develop-cancer-later" class="nav-link" data-scroll-target="#issue-1-people-may-develop-cancer-later"><span class="header-section-number">2.1</span> Issue 1: People May Develop Cancer Later</a></li>
   <li><a href="#issue-2-death-is-a-competing-risk" id="toc-issue-2-death-is-a-competing-risk" class="nav-link" data-scroll-target="#issue-2-death-is-a-competing-risk"><span class="header-section-number">2.2</span> Issue 2: Death Is a Competing Risk</a></li>
   </ul></li>
-  <li><a href="#accounting-for-age-groups" id="toc-accounting-for-age-groups" class="nav-link" data-scroll-target="#accounting-for-age-groups"><span class="header-section-number">3</span> Accounting for Age Groups</a></li>
-  <li><a href="#converting-incidence-rate-to-probability" id="toc-converting-incidence-rate-to-probability" class="nav-link" data-scroll-target="#converting-incidence-rate-to-probability"><span class="header-section-number">4</span> Converting Incidence Rate to Probability</a></li>
-  <li><a href="#simulationcodes" id="toc-simulationcodes" class="nav-link" data-scroll-target="#simulationcodes"><span class="header-section-number">5</span> Simulation/Codes</a></li>
-  <li><a href="#concernslimitation" id="toc-concernslimitation" class="nav-link" data-scroll-target="#concernslimitation"><span class="header-section-number">6</span> Concerns/Limitation</a></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><span class="header-section-number">3</span> Methods</a>
+  <ul class="collapse">
+  <li><a href="#accounting-for-age-groups" id="toc-accounting-for-age-groups" class="nav-link" data-scroll-target="#accounting-for-age-groups"><span class="header-section-number">3.1</span> Accounting for Age Groups</a></li>
+  <li><a href="#converting-incidence-rate-to-probability" id="toc-converting-incidence-rate-to-probability" class="nav-link" data-scroll-target="#converting-incidence-rate-to-probability"><span class="header-section-number">3.2</span> Converting Incidence Rate to Probability</a></li>
+  <li><a href="#generalised-to-amp-method.-extending-to-more-than-2-age-groups" id="toc-generalised-to-amp-method.-extending-to-more-than-2-age-groups" class="nav-link" data-scroll-target="#generalised-to-amp-method.-extending-to-more-than-2-age-groups"><span class="header-section-number">3.3</span> Generalised to AMP Method. Extending to more than 2 age groups</a></li>
+  </ul></li>
+  <li><a href="#simulationcodes" id="toc-simulationcodes" class="nav-link" data-scroll-target="#simulationcodes"><span class="header-section-number">4</span> Simulation/Codes</a></li>
+  <li><a href="#concernslimitation" id="toc-concernslimitation" class="nav-link" data-scroll-target="#concernslimitation"><span class="header-section-number">5</span> Concerns/Limitation</a></li>
   </ul>
 </nav>
 </div>
@@ -192,7 +196,7 @@ Important&nbsp;1: Misconception
 <li>Oudated data since those who died might developed cancer decades ago.</li>
 </ol>
 <p><strong>Counter: To not waste information</strong></p>
-<p>In theory we could, just use the data up to certain age. FOr example if partient A is current 50 years old and had cancer previously. This would increase the rate of cancer by 50 year old. However, the difficutly is the assumption that we have Patients record throughout their whole life (Longitudinal data), which usually might not be complete or is expensive/difficutly to get for millions/billions of population.</p>
+<p>In theory we could, just use the data up to certain age. For example if partient A is current 50 years old and had cancer previously. This would increase the rate of cancer by 50 year old. However, the difficutly is the assumption that we have patients record throughout their whole life (Longitudinal data), which usually might not be complete or is expensive/difficutly to get for millions/billions of population.</p>
 </section>
 <section id="issue-2-death-is-a-competing-risk" class="level3" data-number="2.2">
 <h3 data-number="2.2" class="anchored" data-anchor-id="issue-2-death-is-a-competing-risk"><span class="header-section-number">2.2</span> Issue 2: Death Is a Competing Risk</h3>
@@ -212,8 +216,10 @@ Caution
 </div>
 </section>
 </section>
-<section id="accounting-for-age-groups" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="accounting-for-age-groups"><span class="header-section-number">3</span> Accounting for Age Groups</h2>
+<section id="methods" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="methods"><span class="header-section-number">3</span> Methods</h2>
+<section id="accounting-for-age-groups" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="accounting-for-age-groups"><span class="header-section-number">3.1</span> Accounting for Age Groups</h3>
 <p><a href="#tip-1" class="quarto-xref">Tip&nbsp;1</a> motivates us to make a rate by age groups. For the toy example</p>
 <table class="caption-top table">
 <thead>
@@ -303,13 +309,13 @@ Caution
 \]</span></p>
 </div>
 </div>
-<div class="callout callout-style-default callout-important callout-titled" title="Misconception">
+<div id="tip-2" class="callout callout-style-default callout-important callout-titled" title="Misconception">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Misconception
+Important&nbsp;2: Misconception
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -326,22 +332,114 @@ Caution
 \]</span></p>
 </div>
 </div>
-<p>But <span class="math inline">\(0.5\)</span> is not incidence rate of cancer in <span class="math inline">\(Y_2\)</span> because the denominator in <span class="math inline">\(\frac{50}{100}\)</span> is not population at risk. It may include people who had cancer in Age 1. maybe i confused the rate to probabillity? but hmm pop at risk still not 100 though</p>
+<p>But <span class="math inline">\(0.5\)</span> is not incidence rate of cancer in <span class="math inline">\(Y_2\)</span> because the denominator (100) in <span class="math inline">\(\frac{50}{100}\)</span> is not population at risk. It may include people who had cancer in Age 1? <!-- maybe i confused the rate to probabillity? but hmm pop at risk still not 100 though --></p>
 </section>
-<section id="converting-incidence-rate-to-probability" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="converting-incidence-rate-to-probability"><span class="header-section-number">4</span> Converting Incidence Rate to Probability</h2>
-<p>In the methods above, we assumed incidence rate = probability. This needs corrections, arising from the fact that our crosss-sectional dataset compiles the information at a specific interval. We only see one summary slice of a completed picture. In reality, we assume that as age increases every small amount of time, risk of cancer also varies. Also, once a person develop cancer, they are removed from the population at risk, hence probability might increase given a fixed incidence rate within the interval. For our example, a person can develop cancer at t=0.1 even if our records is compiled only at age=1.</p>
-<p>Intuition: A car drove for 100km in one hour has rate of 100km/h. That doesn’t mean the car drove the same speed all the way, it can slow down/speed up along the way.</p>
-<p>pic</p>
-<p>derive delta t / n ^ n why multiply etc etc Instead of using raw rate, we use 1-exp^lambda t.</p>
-<p>There are probably other reasons for this: memoryless property of exponential distribution? connection to poisson/survival models? For now, we think of it as a correction from discrete time to continuous.</p>
-<p>Double counting death /cancer hence noncancerdeath</p>
+<section id="converting-incidence-rate-to-probability" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="converting-incidence-rate-to-probability"><span class="header-section-number">3.2</span> Converting Incidence Rate to Probability</h3>
+<p>In the methods above, we assumed incidence rate = probability (0,5 incidence rate = 50% chance of getting cancer). This needs corrections, arising from the fact that our crosss-sectional dataset compiles the information at a specific interval. We only see one summary slice of a completed picture. In reality, we assume that as age increases every small amount of time, risk of cancer also varies.</p>
+<p>Also, once a person develop cancer, they are removed from the population at risk, hence probability might increase given a fixed incidence rate within the interval. For our example, a person can develop cancer at t=0.1 even if our records is compiled only at age=1.</p>
+<p>Another concern: A car drove for 100km in one hour has rate of 100km/h. That doesn’t mean the car drove the same speed all the way, it can slow down/speed up along the way.</p>
+<!-- think of rate as speed? -->
+<p>To account for the length of time considered and how the rate behaves over that period, under the simplifying assumption of a constant rate, developing cancer within time (t) is exponential distribution <span class="math inline">\(f(t) = re^{-rt}\)</span>. The probability of developing cancer within time (t) is <span class="math inline">\(\int_0^t re^{-ru}\,du = 1-e^{-rt}\)</span>, rather than simply <span class="math inline">\(rt\)</span>.</p>
+<p>But why exp() though? Can be <span class="math inline">\(2^{rt}\)</span>?</p>
+<p>Or is it because of other reasons: memoryless property of exponential distribution? connection to poisson/survival models? For now, we think of it as a correction from discrete time to continuous.</p>
+<p>The derivation: <span class="math display">\[\mathbb{P}(\text{cancer}) \approx r\Delta t\]</span> <span class="math display">\[\mathbb{P}(\text{no cancer}) \approx 1-r\Delta t\\\]</span> <span class="math display">\[\left(1-\frac{r}{n}\right)^n \to e^{-r} \quad \text{as } n\to\infty\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Time (t) (years)</th>
+<th style="text-align: right;">Approximation <span class="math inline">\(rt\)</span></th>
+<th style="text-align: right;">Exact probability <span class="math inline">\((1-e^{-rt}\)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.50%</td>
+<td style="text-align: right;">0.50%</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">5.00%</td>
+<td style="text-align: right;">4.88%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">25.00%</td>
+<td style="text-align: right;">22.12%</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1.0</td>
+<td style="text-align: right;">50.00%</td>
+<td style="text-align: right;">39.35%</td>
+</tr>
+</tbody>
+</table>
+<div id="tip-rate" class="callout callout-style-default callout-tip callout-titled" title="Converting Rate to Probability, @tip-2 becomes:">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip&nbsp;3: Converting Rate to Probability, <a href="#tip-2" class="quarto-xref">Tip&nbsp;2</a> becomes:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Let <span class="math inline">\(\lambda_{c,j}\)</span> be the cancer rate and <span class="math inline">\(\lambda_{d,j}\)</span> the death rate in <span class="math inline">\(Y_j\)</span>, with <span class="math inline">\(\Lambda_j = \lambda_{c,j} + \lambda_{d,j}\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{P}(C) &amp;= \mathbb{P}(C_{Y_1}) + \mathbb{P}(C_{Y_2} \cap \text{alive in } Y_1 \cap C_{\text{not in } Y_1}) \\
+&amp;= \frac{\lambda_{c,1}}{\Lambda_1}\left(1 - e^{-\Lambda_1}\right) + \underbrace{\frac{\lambda_{c,2}}{\Lambda_2}}_{\text{cancer share}} \times \underbrace{\left(1 - e^{-\Lambda_2}\right)}_{\text{cancer or death in } Y_2} \times \underbrace{e^{-\Lambda_1}}_{\text{survive } Y_1} \\
+&amp;= \frac{0.6}{0.8}\left(1 - e^{-0.8}\right) + \frac{0.5}{0.6} \times \left(1 - e^{-0.6}\right) \times e^{-0.8} \\
+&amp;\approx 0.413 + 0.169 = 0.582
+\end{aligned}
+\]</span></p>
+</div>
+</div>
 </section>
-<section id="simulationcodes" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="simulationcodes"><span class="header-section-number">5</span> Simulation/Codes</h2>
+<section id="generalised-to-amp-method.-extending-to-more-than-2-age-groups" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="generalised-to-amp-method.-extending-to-more-than-2-age-groups"><span class="header-section-number">3.3</span> Generalised to AMP Method. Extending to more than 2 age groups</h3>
+<p>Let <span class="math inline">\(q_j = \dfrac{\lambda_{c,j}}{\Lambda_j}\left(1 - e^{-\Lambda_j}\right)\)</span> be the probability of cancer in <span class="math inline">\(Y_j\)</span>, given event-free at the start of <span class="math inline">\(Y_j\)</span>.</p>
+<p>Three age groups, written out in full: <span class="math display">\[
+\mathbb{P}(C) = q_1 + q_2\, e^{-\Lambda_1} + q_3\, e^{-\Lambda_1}\, e^{-\Lambda_2}
+\]</span></p>
+<p><span class="math inline">\(J\)</span> age groups, collapsing the product of exponentials into one exponential of a sum:</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Generalised with extended time">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Generalised with extended time
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+\begin{aligned}
+\mathbb{P}(C) &amp;= q_1 + q_2\, e^{-\Lambda_1} + q_3\, e^{-\Lambda_1} e^{-\Lambda_2} + \dots + q_J \prod_{k=1}^{J-1} e^{-\Lambda_k}
+\\
+&amp;= \sum_{j=1}^{J} q_j \prod_{k=1}^{j-1} e^{-\Lambda_k}
+\\
+&amp;= \sum_{j=1}^{J} q_j \exp\left(-\sum_{k=1}^{j-1} \Lambda_k\right)
+\\
+&amp;= \sum_{j=1}^{J} \frac{\lambda_{c,j}}{\Lambda_j}\left(1 - e^{-\Lambda_j}\right) \exp\left(-\sum_{k=1}^{j-1} \Lambda_k\right)
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<p>Note: To avoid overcounting (patient develop cancer and die), our death rate should be solely non-cancer death.</p>
 </section>
-<section id="concernslimitation" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="concernslimitation"><span class="header-section-number">6</span> Concerns/Limitation</h2>
+</section>
+<section id="simulationcodes" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="simulationcodes"><span class="header-section-number">4</span> Simulation/Codes</h2>
+</section>
+<section id="concernslimitation" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="concernslimitation"><span class="header-section-number">5</span> Concerns/Limitation</h2>
 <p>Througout the previous sections, we assume we had new cases of cancer. But in reality we usually don’t?</p>
 </section>
 

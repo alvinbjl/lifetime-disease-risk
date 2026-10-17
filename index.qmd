@@ -46,7 +46,7 @@ Population of study might still get cancer in later ages. Some are still childre
 
 **Counter: To not waste information**
 
-In theory we could, just use the data up to certain age. FOr example if partient A is current 50 years old and had cancer previously. This would increase the rate of cancer by 50 year old. However, the difficutly is the assumption that we have Patients record throughout their whole life (Longitudinal data), which usually might not be complete or is expensive/difficutly to get for millions/billions of population.
+In theory we could, just use the data up to certain age. For example if partient A is current 50 years old and had cancer previously. This would increase the rate of cancer by 50 year old. However, the difficutly is the assumption that we have patients record throughout their whole life (Longitudinal data), which usually might not be complete or is expensive/difficutly to get for millions/billions of population.
 
 ### Issue 2: Death Is a Competing Risk
 
@@ -56,7 +56,8 @@ Death is a "competing risk" (i.e. Newborn may die before getting cancer.)
 An extreme example: If all infant vaccines are suddenly ineffective, most of our newborn in our test case likely die before reaching old enough age for (10% rate) cancer to be observed.
 :::
 
-## Accounting for Age Groups
+## Methods
+### Accounting for Age Groups
 
 @tip-1 motivates us to make a rate by age groups. For the toy example
 
@@ -99,7 +100,7 @@ $$
 $$
 :::
 
-::: {.callout-important title="Misconception"}
+::: {#tip-2 .callout-important title="Misconception"}
 $$
 \begin{aligned}
 \mathbb{P}(C) &= \mathbb{P}(C_{Y_1}) + \mathbb{P}(C_{Y_2} \cap \text{alive in } Y_1 \cap C_{\text{not in } Y_1})
@@ -113,28 +114,77 @@ $$
 $$
 :::
 
-But $0.5$ is not incidence rate of cancer in $Y_2$ because the denominator in $\frac{50}{100}$ is not population at risk. It may include people who had cancer in Age 1. maybe i confused the rate to probabillity? but hmm pop at risk still not 100 though
+But $0.5$ is not incidence rate of cancer in $Y_2$ because the denominator (100) in $\frac{50}{100}$ is not population at risk. It may include people who had cancer in Age 1? 
+<!-- maybe i confused the rate to probabillity? but hmm pop at risk still not 100 though -->
 
-## Converting Incidence Rate to Probability
+### Converting Incidence Rate to Probability
 
-In the methods above, we assumed incidence rate = probability. This needs corrections, arising from the fact that our crosss-sectional dataset compiles the information at a specific interval. We only see one summary slice of a completed picture. In reality, we assume that as age increases every small amount of time, risk of cancer also varies. Also, once a person develop cancer, they are removed from the population at risk, hence probability might increase given a fixed incidence rate within the interval. For our example, a person can develop cancer at t=0.1 even if our records is compiled only at age=1.
+In the methods above, we assumed incidence rate = probability (0,5 incidence rate = 50% chance of getting cancer). This needs corrections, arising from the fact that our crosss-sectional dataset compiles the information at a specific interval. We only see one summary slice of a completed picture. In reality, we assume that as age increases every small amount of time, risk of cancer also varies. 
 
-Intuition: A car drove for 100km in one hour has rate of 100km/h. That doesn't mean the car drove the same speed all the way, it can slow down/speed up along the way. 
+Also, once a person develop cancer, they are removed from the population at risk, hence probability might increase given a fixed incidence rate within the interval. For our example, a person can develop cancer at t=0.1 even if our records is compiled only at age=1.
+
+Another concern: A car drove for 100km in one hour has rate of 100km/h. That doesn't mean the car drove the same speed all the way, it can slow down/speed up along the way. 
+
+<!-- think of rate as speed? -->
+To account for the length of time considered and how the rate behaves over that period, under the simplifying assumption of a constant rate, developing cancer within time (t) is exponential distribution $f(t) = re^{-rt}$. The probability of developing cancer within time (t) is $\int_0^t re^{-ru}\,du = 1-e^{-rt}$, rather than simply $rt$.
+
+But why exp() though? Can be $2^{rt}$? 
+
+Or is it because of other reasons: memoryless property of exponential distribution? connection to poisson/survival models? For now, we think of it as a correction from discrete time to continuous.
+
+The derivation: 
+$$\mathbb{P}(\text{cancer}) \approx r\Delta t$$
+$$\mathbb{P}(\text{no cancer}) \approx 1-r\Delta t\\$$
+$$\left(1-\frac{r}{n}\right)^n \to e^{-r} \quad \text{as } n\to\infty$$
+
+| Time \(t\) (years) | Approximation $rt$ | Exact probability $(1-e^{-rt}\)$ |
+|---:|---:|---:|
+| 0.01 | 0.50% | 0.50% |
+| 0.1 | 5.00% | 4.88% |
+| 0.5 | 25.00% | 22.12% |
+| 1.0 | 50.00% | 39.35% |
 
 
 
+::: {#tip-rate .callout-tip title="Converting Rate to Probability, @tip-2 becomes:"}
+Let $\lambda_{c,j}$ be the cancer rate and $\lambda_{d,j}$ the death rate in $Y_j$, with $\Lambda_j = \lambda_{c,j} + \lambda_{d,j}$.
 
-pic
+$$
+\begin{aligned}
+\mathbb{P}(C) &= \mathbb{P}(C_{Y_1}) + \mathbb{P}(C_{Y_2} \cap \text{alive in } Y_1 \cap C_{\text{not in } Y_1}) \\
+&= \frac{\lambda_{c,1}}{\Lambda_1}\left(1 - e^{-\Lambda_1}\right) + \underbrace{\frac{\lambda_{c,2}}{\Lambda_2}}_{\text{cancer share}} \times \underbrace{\left(1 - e^{-\Lambda_2}\right)}_{\text{cancer or death in } Y_2} \times \underbrace{e^{-\Lambda_1}}_{\text{survive } Y_1} \\
+&= \frac{0.6}{0.8}\left(1 - e^{-0.8}\right) + \frac{0.5}{0.6} \times \left(1 - e^{-0.6}\right) \times e^{-0.8} \\
+&\approx 0.413 + 0.169 = 0.582
+\end{aligned}
+$$
+:::
 
+### Generalised to AMP Method. Extending to more than 2 age groups
 
-derive delta t / n ^ n why multiply etc etc
-Instead of using raw rate, we use 1-exp^lambda t. 
+Let $q_j = \dfrac{\lambda_{c,j}}{\Lambda_j}\left(1 - e^{-\Lambda_j}\right)$ be the probability of cancer in $Y_j$, given event-free at the start of $Y_j$.
 
-There are probably other reasons for this: memoryless property of exponential distribution? connection to poisson/survival models? For now, we think of it as a correction from discrete time to continuous.
+Three age groups, written out in full:
+$$
+\mathbb{P}(C) = q_1 + q_2\, e^{-\Lambda_1} + q_3\, e^{-\Lambda_1}\, e^{-\Lambda_2}
+$$
 
+$J$ age groups, collapsing the product of exponentials into one exponential of a sum:
 
-Double counting death /cancer hence noncancerdeath
+::: {.callout-tip title="Generalised with extended time"}
+$$
+\begin{aligned}
+\mathbb{P}(C) &= q_1 + q_2\, e^{-\Lambda_1} + q_3\, e^{-\Lambda_1} e^{-\Lambda_2} + \dots + q_J \prod_{k=1}^{J-1} e^{-\Lambda_k}
+\\
+&= \sum_{j=1}^{J} q_j \prod_{k=1}^{j-1} e^{-\Lambda_k}
+\\
+&= \sum_{j=1}^{J} q_j \exp\left(-\sum_{k=1}^{j-1} \Lambda_k\right)
+\\
+&= \sum_{j=1}^{J} \frac{\lambda_{c,j}}{\Lambda_j}\left(1 - e^{-\Lambda_j}\right) \exp\left(-\sum_{k=1}^{j-1} \Lambda_k\right)
+\end{aligned}
+$$
+:::
 
+Note: To avoid overcounting (patient develop cancer and die), our death rate should be solely non-cancer death.
 
 ## Simulation/Codes
 

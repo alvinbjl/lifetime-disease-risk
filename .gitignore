@@ -13,3 +13,4 @@ _freeze/*
 
 # Do not ignore the ones inside docs
 !docs/*_files/
+**/*.quarto_ipynb
