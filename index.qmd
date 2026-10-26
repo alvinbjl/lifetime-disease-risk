@@ -89,6 +89,7 @@ flowchart LR
   B2 --> C3(2 Cancer)
 ```
 
+### Conditional on alive
 ::: {.callout-important title="Misconception"}
 $$
 \begin{aligned}
@@ -100,6 +101,7 @@ $$
 $$
 :::
 
+### Conditional on cancer-free
 ::: {#tip-2 .callout-important title="Misconception"}
 $$
 \begin{aligned}
@@ -114,8 +116,61 @@ $$
 $$
 :::
 
+### Incidence Rate Approximation
 But $0.5$ is not incidence rate of cancer in $Y_2$ because the denominator (100) in $\frac{50}{100}$ is not population at risk. It may include people who had cancer in Age 1? 
 <!-- maybe i confused the rate to probabillity? but hmm pop at risk still not 100 though -->
+
+ANS: Yes, correct consideration. 
+The AMP method acknowledges this and uses an approximation.
+
+Suppose a population contains:
+
+| Population group | People | New cancer diagnoses |
+| :--- | :--- | :--- |
+| Never had cancer | 900 | 90 first cancers |
+| Previously had cancer | 100 | 10 second cancers |
+| **Total** | **1,000** | **100** |
+
+The observed cancer incidence rate is:
+
+$$\lambda_C = \frac{100}{1000} = 0.10$$
+
+But the actual first-cancer incidence rate is:
+
+$$\lambda_{0C} = \frac{90}{900} = 0.10$$
+
+Both rates equal 10%.
+
+This works because we assumed people with and without previous cancer have the same rate of developing a new primary cancer.
+
+Mathematically:
+
+$$\boxed{\lambda_C = \frac{\lambda_{0C}N_0 + \lambda_{CC}N_C}{N_0 + N_C}}$$
+
+Where:
+
+- $\lambda_{0C}$ = first-cancer incidence rate
+- $\lambda_{CC}$ = subsequent-primary cancer incidence rate
+- $N_0$ = population without previous cancer
+- $N_C$ = population with previous cancer
+
+If $\lambda_{0C} = \lambda_{CC}$, then:
+
+$$\boxed{\lambda_C = \lambda_{0C}}$$
+
+That is why AMP can use the overall population denominator.
+
+But what if people with previous cancer have a higher risk?
+
+If the 100 cancer survivors instead develop 30 new cancers:
+
+$$\lambda_C = \frac{90 + 30}{1000} = 12\%$$
+
+While the true first-cancer incidence remains 10%.
+
+Therefore, AMP would overestimate the first-cancer hazard in this example.
+
+This is a limitation of AMP, not something the calculation eliminates automatically. Sasieni et al. (2011) explain that the approximation performs well when the two groups have similar hazards or when relatively few people have previously developed cancer.
 
 ### Converting Incidence Rate to Probability
 
@@ -144,7 +199,12 @@ $$\left(1-\frac{r}{n}\right)^n \to e^{-r} \quad \text{as } n\to\infty$$
 | 0.5 | 25.00% | 22.12% |
 | 1.0 | 50.00% | 39.35% |
 
-
+Alternatively, 
+$$\text{Number newly diagnosed} = \Delta S = S(t) \cdot \lambda \cdot \Delta t$$
+$$\ln S(t) = -\lambda t$$
+$$S(t) = e^{-\lambda t}$$
+$$\mathbb{P}(\text{cancer by time t}) = 1-e^{-\lambda t}$$
+To account for death, we use two hazards.
 
 ::: {#tip-rate .callout-tip title="Converting Rate to Probability, @tip-2 becomes:"}
 Let $\lambda_{c,j}$ be the cancer rate and $\lambda_{d,j}$ the death rate in $Y_j$, with $\Lambda_j = \lambda_{c,j} + \lambda_{d,j}$.

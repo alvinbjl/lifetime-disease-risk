@@ -242,8 +242,11 @@ Disclaimer: Notes may be incomplete/contain mistakes.
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods"><span class="header-section-number">3</span> Methods</a>
   <ul class="collapse">
   <li><a href="#accounting-for-age-groups" id="toc-accounting-for-age-groups" class="nav-link" data-scroll-target="#accounting-for-age-groups"><span class="header-section-number">3.1</span> Accounting for Age Groups</a></li>
-  <li><a href="#converting-incidence-rate-to-probability" id="toc-converting-incidence-rate-to-probability" class="nav-link" data-scroll-target="#converting-incidence-rate-to-probability"><span class="header-section-number">3.2</span> Converting Incidence Rate to Probability</a></li>
-  <li><a href="#generalised-to-amp-method.-extending-to-more-than-2-age-groups" id="toc-generalised-to-amp-method.-extending-to-more-than-2-age-groups" class="nav-link" data-scroll-target="#generalised-to-amp-method.-extending-to-more-than-2-age-groups"><span class="header-section-number">3.3</span> Generalised to AMP Method. Extending to more than 2 age groups</a></li>
+  <li><a href="#conditional-on-alive" id="toc-conditional-on-alive" class="nav-link" data-scroll-target="#conditional-on-alive"><span class="header-section-number">3.2</span> Conditional on alive</a></li>
+  <li><a href="#conditional-on-cancer-free" id="toc-conditional-on-cancer-free" class="nav-link" data-scroll-target="#conditional-on-cancer-free"><span class="header-section-number">3.3</span> Conditional on cancer-free</a></li>
+  <li><a href="#incidence-rate-approximation" id="toc-incidence-rate-approximation" class="nav-link" data-scroll-target="#incidence-rate-approximation"><span class="header-section-number">3.4</span> Incidence Rate Approximation</a></li>
+  <li><a href="#converting-incidence-rate-to-probability" id="toc-converting-incidence-rate-to-probability" class="nav-link" data-scroll-target="#converting-incidence-rate-to-probability"><span class="header-section-number">3.5</span> Converting Incidence Rate to Probability</a></li>
+  <li><a href="#generalised-to-amp-method.-extending-to-more-than-2-age-groups" id="toc-generalised-to-amp-method.-extending-to-more-than-2-age-groups" class="nav-link" data-scroll-target="#generalised-to-amp-method.-extending-to-more-than-2-age-groups"><span class="header-section-number">3.6</span> Generalised to AMP Method. Extending to more than 2 age groups</a></li>
   </ul></li>
   <li><a href="#simulationcodes" id="toc-simulationcodes" class="nav-link" data-scroll-target="#simulationcodes"><span class="header-section-number">4</span> Simulation/Codes</a></li>
   <li><a href="#concernslimitation" id="toc-concernslimitation" class="nav-link" data-scroll-target="#concernslimitation"><span class="header-section-number">5</span> Concerns/Limitation</a></li>
@@ -386,6 +389,9 @@ Caution
 </div>
 </div>
 </div></div>
+</section>
+<section id="conditional-on-alive" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="conditional-on-alive"><span class="header-section-number">3.2</span> Conditional on alive</h3>
 <div class="callout callout-style-default callout-important callout-titled" title="Misconception">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -406,6 +412,9 @@ Caution
 \]</span></p>
 </div>
 </div>
+</section>
+<section id="conditional-on-cancer-free" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="conditional-on-cancer-free"><span class="header-section-number">3.3</span> Conditional on cancer-free</h3>
 <div id="tip-2" class="callout callout-style-default callout-important callout-titled" title="Misconception">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -429,10 +438,65 @@ Important&nbsp;2: Misconception
 \]</span></p>
 </div>
 </div>
-<p>But <span class="math inline">\(0.5\)</span> is not incidence rate of cancer in <span class="math inline">\(Y_2\)</span> because the denominator (100) in <span class="math inline">\(\frac{50}{100}\)</span> is not population at risk. It may include people who had cancer in Age 1? <!-- maybe i confused the rate to probabillity? but hmm pop at risk still not 100 though --></p>
 </section>
-<section id="converting-incidence-rate-to-probability" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="converting-incidence-rate-to-probability"><span class="header-section-number">3.2</span> Converting Incidence Rate to Probability</h3>
+<section id="incidence-rate-approximation" class="level3" data-number="3.4">
+<h3 data-number="3.4" class="anchored" data-anchor-id="incidence-rate-approximation"><span class="header-section-number">3.4</span> Incidence Rate Approximation</h3>
+<p>But <span class="math inline">\(0.5\)</span> is not incidence rate of cancer in <span class="math inline">\(Y_2\)</span> because the denominator (100) in <span class="math inline">\(\frac{50}{100}\)</span> is not population at risk. It may include people who had cancer in Age 1? <!-- maybe i confused the rate to probabillity? but hmm pop at risk still not 100 though --></p>
+<p>ANS: Yes, correct consideration. The AMP method acknowledges this and uses an approximation.</p>
+<p>Suppose a population contains:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Population group</th>
+<th style="text-align: left;">People</th>
+<th style="text-align: left;">New cancer diagnoses</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Never had cancer</td>
+<td style="text-align: left;">900</td>
+<td style="text-align: left;">90 first cancers</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Previously had cancer</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">10 second cancers</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: left;"><strong>1,000</strong></td>
+<td style="text-align: left;"><strong>100</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The observed cancer incidence rate is:</p>
+<p><span class="math display">\[\lambda_C = \frac{100}{1000} = 0.10\]</span></p>
+<p>But the actual first-cancer incidence rate is:</p>
+<p><span class="math display">\[\lambda_{0C} = \frac{90}{900} = 0.10\]</span></p>
+<p>Both rates equal 10%.</p>
+<p>This works because we assumed people with and without previous cancer have the same rate of developing a new primary cancer.</p>
+<p>Mathematically:</p>
+<p><span class="math display">\[\boxed{\lambda_C = \frac{\lambda_{0C}N_0 + \lambda_{CC}N_C}{N_0 + N_C}}\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(\lambda_{0C}\)</span> = first-cancer incidence rate</li>
+<li><span class="math inline">\(\lambda_{CC}\)</span> = subsequent-primary cancer incidence rate</li>
+<li><span class="math inline">\(N_0\)</span> = population without previous cancer</li>
+<li><span class="math inline">\(N_C\)</span> = population with previous cancer</li>
+</ul>
+<p>If <span class="math inline">\(\lambda_{0C} = \lambda_{CC}\)</span>, then:</p>
+<p><span class="math display">\[\boxed{\lambda_C = \lambda_{0C}}\]</span></p>
+<p>That is why AMP can use the overall population denominator.</p>
+<p>But what if people with previous cancer have a higher risk?</p>
+<p>If the 100 cancer survivors instead develop 30 new cancers:</p>
+<p><span class="math display">\[\lambda_C = \frac{90 + 30}{1000} = 12\%\]</span></p>
+<p>While the true first-cancer incidence remains 10%.</p>
+<p>Therefore, AMP would overestimate the first-cancer hazard in this example.</p>
+<p>This is a limitation of AMP, not something the calculation eliminates automatically. Sasieni et al.&nbsp;(2011) explain that the approximation performs well when the two groups have similar hazards or when relatively few people have previously developed cancer.</p>
+</section>
+<section id="converting-incidence-rate-to-probability" class="level3" data-number="3.5">
+<h3 data-number="3.5" class="anchored" data-anchor-id="converting-incidence-rate-to-probability"><span class="header-section-number">3.5</span> Converting Incidence Rate to Probability</h3>
 <p>In the methods above, we assumed incidence rate = probability (0,5 incidence rate = 50% chance of getting cancer). This needs corrections, arising from the fact that our crosss-sectional dataset compiles the information at a specific interval. We only see one summary slice of a completed picture. In reality, we assume that as age increases every small amount of time, risk of cancer also varies.</p>
 <p>Also, once a person develop cancer, they are removed from the population at risk, hence probability might increase given a fixed incidence rate within the interval. For our example, a person can develop cancer at t=0.1 even if our records is compiled only at age=1.</p>
 <p>Another concern: A car drove for 100km in one hour has rate of 100km/h. That doesn’t mean the car drove the same speed all the way, it can slow down/speed up along the way.</p>
@@ -477,6 +541,7 @@ Important&nbsp;2: Misconception
 </tr>
 </tbody>
 </table>
+<p>Alternatively, <span class="math display">\[\text{Number newly diagnosed} = \Delta S = S(t) \cdot \lambda \cdot \Delta t\]</span> <span class="math display">\[\ln S(t) = -\lambda t\]</span> <span class="math display">\[S(t) = e^{-\lambda t}\]</span> <span class="math display">\[\mathbb{P}(\text{cancer by time t}) = 1-e^{-\lambda t}\]</span> To account for death, we use two hazards.</p>
 <div id="tip-rate" class="callout callout-style-default callout-tip callout-titled" title="Converting Rate to Probability, @tip-2 becomes:">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -499,8 +564,8 @@ Tip&nbsp;3: Converting Rate to Probability, <a href="#tip-2" class="quarto-xref"
 </div>
 </div>
 </section>
-<section id="generalised-to-amp-method.-extending-to-more-than-2-age-groups" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="generalised-to-amp-method.-extending-to-more-than-2-age-groups"><span class="header-section-number">3.3</span> Generalised to AMP Method. Extending to more than 2 age groups</h3>
+<section id="generalised-to-amp-method.-extending-to-more-than-2-age-groups" class="level3" data-number="3.6">
+<h3 data-number="3.6" class="anchored" data-anchor-id="generalised-to-amp-method.-extending-to-more-than-2-age-groups"><span class="header-section-number">3.6</span> Generalised to AMP Method. Extending to more than 2 age groups</h3>
 <p>Let <span class="math inline">\(q_j = \dfrac{\lambda_{c,j}}{\Lambda_j}\left(1 - e^{-\Lambda_j}\right)\)</span> be the probability of cancer in <span class="math inline">\(Y_j\)</span>, given event-free at the start of <span class="math inline">\(Y_j\)</span>.</p>
 <p>Three age groups, written out in full: <span class="math display">\[
 \mathbb{P}(C) = q_1 + q_2\, e^{-\Lambda_1} + q_3\, e^{-\Lambda_1}\, e^{-\Lambda_2}

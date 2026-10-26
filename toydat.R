@@ -1,3 +1,58 @@
+# v1
+library(tidyverse)
+
+data <- tibble(
+  age = 1:5,
+  pop = c(100, 95, 90, 84, 78),
+  c_cancer = c(60, 50, 45, 38, 32),
+  c_death = c(20, 10, 12, 9, 8)
+  # r_cancer = c(0.60, 0.53, 0.50, 0.45, 0.41),
+  # r_death = c(0.20, 0.11, 0.13, 0.11, 0.10)
+  ) |> 
+  mutate(
+    r_cancer = c_cancer/pop,
+    r_death = c_death/pop,
+    r_hazard = r_cancer + r_death,
+    p_surv = exp(-r_hazard),
+    p_cancer_or_death = 1-exp(-r_hazard),
+    p_cancer = c_cancer/(c_cancer + c_death) * p_cancer_or_death,
+    p_surv_cumulative = cumprod(p_surv)
+  ) |> 
+  view()
+
+# risk <- 
+  
+data |> 
+  select(p_cancer, p_surv_cumulative) |> 
+  mutate(p_surv_cumulative = c(1, p_surv_cumulative[1:n()-1]),
+         p = p_cancer*p_surv_cumulative) |> 
+  select(p) |> 
+  sum()
+  
+# change to funcitons
+
+
+t <- tibble(a = 1:5, b = 2:6) |> 
+  mutate(b = c(1, b[1:n()-1]))
+
+
+x <- 0
+for (i in 1:5) {
+  x <- x + i
+}
+x
+  
+  1:nrow(data)
+
+
+
+
+
+
+
+
+
+# archive ---------------------------------------------------------------------
 library(tidyverse)
 
 y1 <- data.frame(
