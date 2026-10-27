@@ -4,10 +4,10 @@ format:
     toc: true
     toc-location: left
   
-title: "Lifetime Risk of Developing Disease"
+title: "Lifetime Risk of Developing Cancer"
 date: "2026-10-10"
 abstract: |
-  Didn't found well explained resources on this topic. Below is my attempt to make one while learning.
+  Didn't found well explained resources on this topic. Below is my attempt to make one while learning. We use cancer as an example to explain the AMP method, but the method can also be applied to other diseases.
   Disclaimer: Notes may be incomplete/contain mistakes.
 ---
 
@@ -19,10 +19,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Goal
+Given cancer cases data from certain time period, we want to estimate someone's  chance of developing cancer in their life.
 
-Given a cross-sectional dataset (a slice in time) with incidence rate (disease count/total population). we want to estimate the "lifetime risk", a cumulative probability for a person to get this disease throughout their lifespan.
+![](<sasieni_amp_minimal_infographic.png>){width="100%" fig-alt="Four-panel infographic showing population and cancer records by age, age-specific incidence and mortality rates, a hypothetical cohort followed through the AMP method, and an illustrative lifetime cancer risk."}
 
-With this measure, the motivation to supplement health professionals with evidence on managing disease X, answering questions such as:
+This measure motivates to supplement health professionals with evidence on disease management, answering questions such as:
 
 1. Burden of cancer on healthcare system? How many patients expected to be treated per year? 
 2. What age is the best for cancer screening? 
@@ -172,6 +173,143 @@ Therefore, AMP would overestimate the first-cancer hazard in this example.
 
 This is a limitation of AMP, not something the calculation eliminates automatically. Sasieni et al. (2011) explain that the approximation performs well when the two groups have similar hazards or when relatively few people have previously developed cancer.
 
+
+## The Mathematical Reason
+
+Sasieni et al. (2011) express the observed cancer incidence rate as a weighted average:
+
+$$
+\lambda_C = (1-p)\lambda_{0C} + p\lambda_{CC}
+$$
+
+where:
+
+- $p$: Proportion of living people with a previous cancer.
+- $\lambda_{0C}$: First-cancer incidence rate among cancer-free people.
+- $\lambda_{CC}$: Subsequent-primary cancer incidence rate among previously diagnosed people.
+- $\lambda_C$: Observed cancer incidence rate in the general population.
+
+Rearranging:
+
+$$
+\boxed{
+\lambda_C - \lambda_{0C}
+= p(\lambda_{CC} - \lambda_{0C})
+}
+$$
+
+This equation explains when the observed incidence rate is a reasonable approximation of the first-cancer incidence rate.
+
+**Case A: Similar incidence rates**
+
+If $\lambda_{CC} \approx \lambda_{0C}$, then:
+
+$$
+\lambda_C \approx \lambda_{0C}
+$$
+
+This holds regardless of the proportion of cancer survivors.
+
+**Case B: Small proportion of cancer survivors**
+
+If $p \approx 0$, then:
+
+$$
+\lambda_C \approx \lambda_{0C}
+$$
+
+This holds even when cancer survivors have substantially higher incidence rates.
+
+**Key takeaway:** The observed incidence rate approximates the first-cancer incidence rate when either the incidence rates are similar between groups or the proportion of people with previous cancer is small.
+
+*Source: Sasieni et al. (2011), Equations (1) and (5), p. 462.*
+
+
+
+## Observed vs First-Cancer Incidence Rate
+
+The observed incidence rate is:
+
+$$
+\lambda_C = (1-p)\lambda_{0C}+p\lambda_{CC}
+$$
+
+```{ojs}
+//| echo: false
+
+viewof p = Inputs.range([0, 60], {
+  value: 20,
+  step: 5,
+  label: "Proportion with previous cancer (%)"
+})
+
+viewof survivorRate = Inputs.range([0, 40], {
+  value: 20,
+  step: 5,
+  label: "Subsequent-primary incidence rate (%)"
+})
+```
+
+```{ojs}
+//| echo: false
+//| output: false
+
+firstRate = 10
+observedRate = (1 - p / 100) * firstRate +
+               (p / 100) * survivorRate
+difference = observedRate - firstRate
+rates = [
+  {type: "First-cancer rate", value: firstRate},
+  {type: "Observed rate", value: observedRate}
+]
+```
+
+```{ojs}
+//| echo: false
+
+Plot.plot({
+  width: 650,
+  height: 260,
+  marginLeft: 160,
+  x: {
+    domain: [0, 45],
+    label: "Incidence rate (%)"
+  },
+  y: {
+    label: null
+  },
+  marks: [
+    Plot.barX(rates, {
+      x: "value",
+      y: "type",
+      fill: "type",
+      tip: true
+    }),
+    Plot.text(rates, {
+      x: "value",
+      y: "type",
+      text: d => `${d.value.toFixed(1)}%`,
+      dx: 25
+    }),
+    Plot.ruleX([0])
+  ],
+  color: {legend: false}
+})
+```
+
+```{ojs}
+//| echo: false
+
+md`**Difference:** ${difference.toFixed(1)} percentage points.
+
+**Observed rate:** ${observedRate.toFixed(1)}%
+
+**True first-cancer rate:** ${firstRate.toFixed(1)}%`
+```
+
+
+
+
 ### Converting Incidence Rate to Probability
 
 In the methods above, we assumed incidence rate = probability (0,5 incidence rate = 50% chance of getting cancer). This needs corrections, arising from the fact that our crosss-sectional dataset compiles the information at a specific interval. We only see one summary slice of a completed picture. In reality, we assume that as age increases every small amount of time, risk of cancer also varies. 
@@ -201,6 +339,7 @@ $$\left(1-\frac{r}{n}\right)^n \to e^{-r} \quad \text{as } n\to\infty$$
 
 Alternatively, 
 $$\text{Number newly diagnosed} = \Delta S = S(t) \cdot \lambda \cdot \Delta t$$
+$$\frac{1}{S(t)} \frac{ds}{dt} = -\lambda$$
 $$\ln S(t) = -\lambda t$$
 $$S(t) = e^{-\lambda t}$$
 $$\mathbb{P}(\text{cancer by time t}) = 1-e^{-\lambda t}$$
